@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" class="h-100">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width">
+  <meta name="description" content=„News Online is designed for individuals who want to stay informed and engaged with global news.">
+  <meta name="keywords" content="News Online, World News, Breaking News, Political News, Up to date news, Technology, Science">
+  
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+  <!-- Font Awesome -->
+  <script src="" crossorigin="anonymous"></script>
+
+  <!-- Link to CSS file -->
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+  <!-- Site title and favicon for News Online-->
+  <link rel="icon" type="image/x-icon" href="{% static 'image/favicon.ico' %}">
+
+  <title>News Online</title>
+
+</head>
+
+<body class="d-flex flex-column h-100">
+
+  <!-- Site Nav-bar -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-body-tertiary">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="{% url 'home' %}"><span class="logo">News Online</span></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02"
+        aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home</a>
+          </li>
+          {% if user.is_authenticated %}
+          {% if user.is_superuser%}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'add_news' %}">Add News</a>
+          </li>
+          {% endif %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'account_logout' %}">Logout</a>
+          </li>
+          {% else %}
+	      <li class="nav-item">
+            <a class="nav-link" href="{% url 'account_login' %}">Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'account_signup' %}">Sign Up</a>
+          </li> 
+          {% endif %}
+        </ul>
+        <div class="navbar-nav ml-auto">
+          {% if user.is_authenticated %}
+          {% if user.is_superuser%}
+          <span class="navbar-text"><strong>Logged as Admin: {{ user.username }}</strong></span>
+          {% endif %}
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  {% for message in messages %}
+  <div class="container-fluid p-0">
+    <div class="alert {{ message.tags }} alert-dismissible" id="flash-msg" role="alert">
+      {{ message }}
+    </div>
+  </div>
+  {% endfor %}
+
+  <main class="flex-shrink-0 main-bg">
+    {% block content %}
+
+    <!-- Content -->
+    {% endblock content %}
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer mt-auto py-3 bg-body-tertiary">
+    <div>
+      <ul class="social-link">
+        <li>
+          <a href="https://github.com/AsliKaradas" target="_blank"
+            aria-label="Asli’s GitHub profile (opens in a new tab)"><i class="fa-brands fa-github"></i></a>
+        </li>
+        <li>
+          <a href="https://www.linkedin.com" target="_blank">
+           <i class="fa-brands fa-linkedin"></i></a>
+        </li>
+        <li>
+          <a href="https://www.instagram.com/" target="_blank" aria-label="Join us on instagram">
+            <i class="fa-brands fa-instagram"></i></a>
+        </li>
+      </ul>
+    </div>
+
+    <p class="footer-text m-0 text-center text-dark">&copy;2024 News Online | Privacy Policy | Site Notice</p>
+  </footer>
+
+  <!-- Javascript File  -->
+  <script src="{% static 'js/script.js' %}"> </script>
+</body>
+
+</html> 
