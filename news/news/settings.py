@@ -19,7 +19,7 @@ if os.path.isfile('env.py'):
     import env
 import os
 from pathlib import Path
-
+TIME_ZONE = 'Africa/Lagos'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
  
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
